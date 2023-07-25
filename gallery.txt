@@ -1,0 +1,48 @@
+import React from "react";
+import { LightBox } from "react-lightbox-pack";
+import "react-lightbox-pack/dist/index.css";
+
+const Gallery = (props) => {
+  const [toggle, setToggle] = React.useState(false);
+  const [sIndex, setSIndex] = React.useState(0);
+
+  // Handler
+  const lightBoxHandler = (state, sIndex) => {
+    setToggle(state);
+    setSIndex(sIndex);
+  };
+
+  return (
+    <div>
+      {/* // data should be an array of object */}
+      {props.data.map((item, index) => (
+        <>
+          <img
+            key={item.id}
+            src={item.image}
+            alt="product"
+            style={{ maxHeight: "auto", maxWidth: "35vw" }}
+            onClick={() => {
+              lightBoxHandler(true, index);
+            }}
+          />
+        </>
+      ))}
+
+      {/* //Component */}
+      <LightBox
+        state={toggle}
+        event={lightBoxHandler}
+        data={props.data}
+        imageWidth="60vw"
+        imageHeight="auto"
+        thumbnailHeight={50}
+        thumbnailWidth={50}
+        setImageIndex={setSIndex}
+        imageIndex={sIndex}
+      />
+    </div>
+  );
+};
+
+export default Gallery;
